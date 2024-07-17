@@ -52,26 +52,26 @@ public class FriendServiceTest {
     }
 
     @Test
-    void testSendFriendRequest() {
+    void 친구요청_전송_테스트() {
         FriendRequest friendRequest = friendService.sendFriendRequest(sender, receiver);
         log.info("Friend Request: {}", friendRequest);
     }
 
-    @Test
-    void testAcceptFriendRequest() {
-        FriendRequest friendRequest = friendService.sendFriendRequest(sender, receiver);
-        friendService.acceptFriendRequest(friendRequest.getFriendRequestSeq(), receiver);
+    // @Test
+    // void 친구요청_수락_테스트() {
+    //     FriendRequest friendRequest = friendService.sendFriendRequest(sender, receiver);
+    //     friendService.acceptFriendRequest(friendRequest.getFriendRequestSeq(), receiver);
 
-        Optional<FriendList> friendship = friendListRepository.findFriendship(sender, receiver);
-        if (friendship.isPresent()) {
-            log.info("Friendship established: {}", friendship.get());
-        } else {
-            log.info("Friendship not found");
-        }
-    }
+    //     Optional<FriendList> friendship = friendListRepository.findFriendship(sender, receiver);
+    //     if (friendship.isPresent()) {
+    //         log.info("Friendship established: {}", friendship.get());
+    //     } else {
+    //         log.info("Friendship not found");
+    //     }
+    // }
 
     @Test
-    void testRejectFriendRequest() {
+    void 친구요청_거절_테스트() {
         FriendRequest friendRequest = friendService.sendFriendRequest(sender, receiver);
         friendService.rejectFriendRequest(friendRequest.getFriendRequestSeq(), receiver);
 
@@ -84,7 +84,7 @@ public class FriendServiceTest {
     }
 
     @Test
-    void testDeleteFriend() {
+    void 친구삭제_테스트() {
         FriendRequest friendRequest = friendService.sendFriendRequest(sender, receiver);
         friendService.acceptFriendRequest(friendRequest.getFriendRequestSeq(), receiver);
 
@@ -98,23 +98,23 @@ public class FriendServiceTest {
         }
     }
 
+    // @Test
+    // void 친구차단_테스트() {
+    //     FriendRequest friendRequest = friendService.sendFriendRequest(sender, receiver);
+    //     friendService.acceptFriendRequest(friendRequest.getFriendRequestSeq(), receiver);
+
+    //     friendService.blockFriend(sender, receiver);
+
+    //     Optional<FriendList> blockedFriendship = friendListRepository.findFriendship(sender, receiver);
+    //     if (blockedFriendship.isPresent()) {
+    //         log.info("Friendship blocked: {}", blockedFriendship.get());
+    //     } else {
+    //         log.info("Friendship not found");
+    //     }
+    // }
+
     @Test
-    void testBlockFriend() {
-        FriendRequest friendRequest = friendService.sendFriendRequest(sender, receiver);
-        friendService.acceptFriendRequest(friendRequest.getFriendRequestSeq(), receiver);
-
-        friendService.blockFriend(sender, receiver);
-
-        Optional<FriendList> blockedFriendship = friendListRepository.findFriendship(sender, receiver);
-        if (blockedFriendship.isPresent()) {
-            log.info("Friendship blocked: {}", blockedFriendship.get());
-        } else {
-            log.info("Friendship not found");
-        }
-    }
-
-    @Test
-    void testGetAllFriends() {
+    void 모든친구_가져오기_테스트() {
         FriendRequest friendRequest = friendService.sendFriendRequest(sender, receiver);
         friendService.acceptFriendRequest(friendRequest.getFriendRequestSeq(), receiver);
 

@@ -8,7 +8,8 @@ public enum Transaction {
 
     USE(0),
     CHAGE(1),
-    REFUND(2);
+    REFUND(2),
+    ADD(3);
 
     private final int flag;
 }

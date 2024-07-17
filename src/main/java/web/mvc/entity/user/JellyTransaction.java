@@ -19,6 +19,7 @@ public class JellyTransaction {
     @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "transaction_seq")
     @SequenceGenerator(name ="transaction_seq" , allocationSize = 1 , sequenceName = "transaction_seq")
     private Long transactionSeq;
+    @Enumerated(EnumType.ORDINAL)
     private Transaction transactionType;
     @Column(length = 300)
     private String jellyAmount;

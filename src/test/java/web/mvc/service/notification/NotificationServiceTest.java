@@ -50,51 +50,51 @@ class NotificationServiceTest {
 
     @Test
     @Transactional
-    void testGetNotificationsByUser() {
+    void 사용자별_알림_가져오기_테스트() {
         List<Notification> notifications = notificationService.getNotificationsByUser(testUser);
-        log.info("Notifications: {}", notifications);
+        log.info("사용자별_알림_가져오기_테스트: {}", notifications);
     }
 
     @Test
     @Transactional
-    void testUpdateNotificationIsChecked() {
+    void 알림_읽음_상태_업데이트_테스트() {
         notificationService.updateNotificationIsChecked(testNotification.getNotificationSeq());
         notificationRepository.flush(); // flush to synchronize the session
         Notification updatedNotification = notificationRepository.findById(testNotification.getNotificationSeq()).orElse(null);
-        log.info("Updated Notification: {}", updatedNotification);
+        log.info("알림_읽음_상태_업데이트_테스트: {}", updatedNotification);
     }
 
     @Test
     @Transactional
-    void testNotificationIsChecked() {
+    void 알림_읽음_확인_테스트() {
         boolean isChecked = notificationService.notificationIsChecked(testNotification.getNotificationSeq());
-        log.info("Is Checked Before Update: {}", isChecked);
+        log.info("알림_읽음_확인_테스트_업데이트_전: {}", isChecked);
         notificationService.updateNotificationIsChecked(testNotification.getNotificationSeq());
         notificationRepository.flush(); // flush to synchronize the session
         isChecked = notificationService.notificationIsChecked(testNotification.getNotificationSeq());
-        log.info("Is Checked After Update: {}", isChecked);
+        log.info("알림_읽음_확인_테스트_업데이트_후: {}", isChecked);
     }
 
     @Test
     @Transactional
-    void testDeleteNotification() {
+    void 알림_삭제_테스트() {
         notificationService.deleteNotification(testNotification.getNotificationSeq());
         notificationRepository.flush(); // flush to synchronize the session
         Notification deletedNotification = notificationRepository.findById(testNotification.getNotificationSeq()).orElse(null);
-        log.info("Deleted Notification: {}", deletedNotification);
+        log.info("알림_삭제_테스트: {}", deletedNotification);
     }
 
     @Test
     @Transactional
-    void testGetNotificatedUrl() {
+    void 알림_URL_가져오기_테스트() {
         String url = notificationService.getNotificatedUrl(testNotification);
-        log.info("Notification URL: {}", url);
+        log.info("알림_URL_가져오기_테스트: {}", url);
     }
 
     @Test
     @Transactional
-    void testGetNotificationById() {
+    void 알림_ID로_가져오기_테스트() {
         Notification notification = notificationService.getNotificationById(testNotification.getNotificationSeq());
-        log.info("Notification by ID: {}", notification);
+        log.info("알림_ID로_가져오기_테스트: {}", notification);
     }
 }

@@ -10,6 +10,8 @@ import web.mvc.dto.user.EmailVerificationDTO;
 import web.mvc.dto.user.UsersDTO;
 import web.mvc.service.user.UserService;
 
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -68,6 +70,12 @@ public class UserController {
     @PostMapping("/nickName/{nickName}")
     public ResponseEntity<?> duplicateNickNameCheck(@PathVariable String nickName){
         return ResponseEntity.status(HttpStatus.OK).body(userService.duplicateNickNameCheck(nickName));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchUsers(@RequestParam String nickname) {
+        List<UsersDTO> users = userService.searchUsers(nickname);
+        return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
 }

@@ -4,6 +4,7 @@ import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -42,6 +44,7 @@ public class UserServiceImpl implements UserService {
     private final ProfileInterestRepository profileInterestRepository;
 
     private final AdminDTO adminDTO;
+    private final ModelMapper modelMapper;
     private String subject ="Friendy 가입 인증코드 입니다!";
     private String failMsg = "메일 발송을 실패했습니다";
     private String registerMsg = "해당 이메일로 인증 코드를 보냈습니다 확인해 주세요";
@@ -319,4 +322,13 @@ public class UserServiceImpl implements UserService {
     
         return "유저 상태 업데이트 완료";
     }
+
+    @Override
+    public List<UsersDTO> searchUsers(String nickname) {
+        List<Users> users = userRepository.findByNickNameContaining(nickname);
+        return users.stream()
+                .map(user -> modelMapper.map(user, UsersDTO.class))
+                .collect(Collectors.toList());
+    }
+
 }

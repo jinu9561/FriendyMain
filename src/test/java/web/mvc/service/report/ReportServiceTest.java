@@ -81,9 +81,9 @@ public class ReportServiceTest {
     @Test
     void 신고목록전체출력() {
         List<Report> list = reportRepository.findAll();
-        log.info("Report list size: {}", list.size());
+        log.info("신고목록전체출력 - 신고 목록 크기: {}", list.size());
 
-        list.forEach(r -> log.info("@@@Report Seq: {}", r.getReportSeq()));
+        list.forEach(r -> log.info("@@@신고 Seq: {}", r.getReportSeq()));
     }
 
     @Test
@@ -92,8 +92,6 @@ public class ReportServiceTest {
         Report selectedReport = reportRepository.findById(reportSeq)
                 .orElseThrow(() -> new GlobalException(ErrorCode.NOTFOUND_ID));
 
-        log.info("selectedReport: {}", selectedReport);
+        log.info("신고게시글_개별_출력: {}", selectedReport);
     }
-
-
 }

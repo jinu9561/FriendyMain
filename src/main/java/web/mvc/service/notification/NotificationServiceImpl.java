@@ -75,7 +75,6 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void addNotification(Users user, String message) {
         // 알림 저장
-        System.out.println("@%&%^@@@@@addNotification");
         Notification notification = new Notification();
         notification.setUser(user);
         notification.setNotificationMessage(message);
@@ -88,7 +87,6 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private void sendRealTimeNotification(Long userSeq, String message) {
-        System.out.println("@%&%^@@@@@sendRealTimeNotification message" + message);
         SseEmitter emitter = emitters.get(userSeq);
         if (emitter != null) {
             executor.execute(() -> {

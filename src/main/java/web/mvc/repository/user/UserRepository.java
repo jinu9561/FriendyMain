@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import web.mvc.entity.user.Users;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<Users, Long> {
 
@@ -23,6 +24,9 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 
     @Query("select u from Users u where u.userSeq = ?1") // 진우가 작성함
     public Users findUserByUserSeq(Long userSeq);
+
+    @Query("select u from Users u where u.userSeq = ?1") // 진우가 작성함
+    Optional<Users> findUserOptionalByUserSeq(Long userSeq);
 
     @Query("select u from Users u where u.nickName like %?1%")
     List<Users> findByNickNameContaining(String nickname);

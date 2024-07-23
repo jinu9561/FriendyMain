@@ -42,8 +42,8 @@ public class CommunityBoard {
     @Column(name = "BOARD_TYPE", nullable = false)  //0번 : 실명(게시자 정보 표시) 게시판, 1번 : 익명 게시판
     private int boardType;
 
-    @Column(name = "BOARD_LIKE", nullable = false)
-    private int boardLike;
+    @Column(name = "BOARD_LIKE", nullable = false, columnDefinition = "int default 0")
+    private int boardLike = 0;  // 기본값을 0으로 설정
 
     @CreationTimestamp
     @Column(name = "BOARD_REG_DATE", nullable = false)

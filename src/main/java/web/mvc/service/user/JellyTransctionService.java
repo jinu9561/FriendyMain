@@ -20,6 +20,9 @@ public interface JellyTransctionService {
     // 젤리 사용
     public String useJelly (Long userSeq, JellyTransactionDTO jellyTransactionDTO);
 
+    // 참가 거절 시 젤리 환불
+    public String refundJelly(Long userSeq, JellyTransactionDTO jellyTransactionDTO);
+
     // 젤리 환불 신청
     public String refund(RefundDTO refundDTO);
 }

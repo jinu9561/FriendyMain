@@ -27,7 +27,8 @@ public enum ErrorCode {
     NOTFOUND_PHOTOBOARD(613,"사진 게시글 조회에 실패했습니다."),
     INVALID_USER_ID(614,"아이디 형식이 맞지 않습니다."),
     INVALID_BIRTH_DATE(615,"생년월일을 확인해 주세요."),
-    INVALID_PHONE_NUMBER(616,"전화번호를 확인해 주세요.");
+    INVALID_PHONE_NUMBER(616,"전화번호를 확인해 주세요."),
+    INSUFFICIENT_JELLY(617, "젤리가 부족합니다.");
 
     private final int status;
     private final String message;

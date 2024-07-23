@@ -21,4 +21,8 @@ public interface CommunityBoardService {
     String deleteCommunityBoard(Long commBoardSeq);
 
     public List<CommunityBoardDTO> searchCommunityBoards(int boardType, String keyword);
+
+    boolean likeCommunityBoard(Long commBoardSeq, Long userSeq);
+
+    boolean dislikeCommunityBoard(Long commBoardSeq, Long userSeq);
 }

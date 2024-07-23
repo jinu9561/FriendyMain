@@ -74,10 +74,35 @@ public class JellyTransctionController {
         }
     }
 
+    /**
+     * 출석 시 젤리 2개
+     * */
+    @PostMapping("/refund/{userSeq}")
+    public ResponseEntity<?> refundJelly(@PathVariable Long userSeq, @RequestBody JellyTransactionDTO jellyTransactionDTO) {
+        log.info("Received refund jelly request for userSeq: {}", userSeq);
+        log.info("JellyTransactionDTO: {}", jellyTransactionDTO);
+
+        try {
+            String result = jellyTransctionService.refundJelly(userSeq, jellyTransactionDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        } catch (Exception e) {
+            log.error("해당 userSeq에게 젤리 환불 실패: {}", userSeq, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @PostMapping("/use/{userSeq}")
     public ResponseEntity<?> useJelly(@PathVariable Long userSeq, @RequestBody JellyTransactionDTO jellyTransactionDTO) {
-        log.info(jellyTransactionDTO.toString());
-        return ResponseEntity.status(HttpStatus.OK).body(jellyTransctionService.useJelly(userSeq,jellyTransactionDTO));
+        log.info("Received add jelly request for userSeq: {}", userSeq);
+        log.info("JellyTransactionDTO: {}", jellyTransactionDTO);
+
+        try {
+            String result = jellyTransctionService.useJelly(userSeq, jellyTransactionDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        } catch (Exception e) {
+            log.error("해당 userSeq에게 젤리 지급 실패: {}", userSeq, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @PutMapping("/refund")

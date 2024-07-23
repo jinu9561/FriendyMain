@@ -85,14 +85,12 @@ public class MeetUpBoardController {
     }
 
     @GetMapping("/selectAll")
-    public ResponseEntity<?> findAllMeetUp() {
+    public ResponseEntity<?> findAllMeetUp(){
         List<MeetUpBoard> meetUpBoardList = meetUpBoardService.selectAll();
         List<MeetUpSendDTO> meetUpSendDTOList = new ArrayList<>();
 
         for (MeetUpBoard board : meetUpBoardList) {
             // 각 MeetUpBoard 객체의 정보를 출력합니다.
-
-
             Date date = board.getMeetUpDeadLine();
             String meetUpImgName = null;
             List<MeetUpBoardDetailImg> list = meetUpDetailImgService.findImgList(board.getMeetUpSeq());
@@ -101,7 +99,6 @@ public class MeetUpBoardController {
                 meetUpImgName = meetUpBoardDetailImg.getMeetUpDetailImgName();
                 imgNameList.add(meetUpImgName);
             }
-
             MeetUpSendDTO meetUpSendDTO = MeetUpSendDTO.builder()
                     .meetUpSeq(board.getMeetUpSeq())
                     .meetUpDesc(board.getMeetUpDesc())
@@ -169,11 +166,7 @@ public class MeetUpBoardController {
 
         List<MeetUpBoardList> meetUpBoadList=meetUpBoardService.findInviteMeetUpByUserSeq(userSeq);
         List<MeetUpSendDTO> meetUpSendDTOList = new ArrayList<>();
-
-
         for (MeetUpBoardList meetUpBoardList : meetUpBoadList) {
-
-
             MeetUpSendDTO meetUpSendDTO = MeetUpSendDTO.builder()
                     .userSeq(meetUpBoardList.getUser().getUserSeq())
                     .meetUpSeq(meetUpBoardList.getMeetUpBoard().getMeetUpSeq())
@@ -185,16 +178,9 @@ public class MeetUpBoardController {
                     .meetUpDeadLine(String.valueOf(meetUpBoardList.getMeetUpBoard().getMeetUpDeadLine()))
                     .build();
             meetUpSendDTOList.add(meetUpSendDTO);
-
         }
         return  ResponseEntity.status(HttpStatus.OK).body(meetUpSendDTOList);
     }
-
-
-
-
-
-
 
     @GetMapping("/select/{meetUpName}")
     //게시글 상세보기

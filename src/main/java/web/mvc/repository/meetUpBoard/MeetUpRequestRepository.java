@@ -14,8 +14,8 @@ public interface MeetUpRequestRepository extends JpaRepository<MeetUpRequest, Lo
     List<MeetUpRequest> findAllByMeetUpSeq(Long meetUpBoardSeq);
 
     @Modifying
-    @Query("update MeetUpRequest p set p.meetUpRequestStatus =  ?1 where p.meetUpBoard.meetUpSeq= ?2 and  p.user.userSeq=?3")
-    int changeStatusBySeq( int meetUpRequestStatus, Long meetUpSeq, Long userSeq);
+    @Query("update MeetUpRequest p set p.meetUpRequestStatus =  ?1 , p.reasonText = ?4 where p.meetUpBoard.meetUpSeq= ?2 and  p.user.userSeq=?3")
+    int changeStatusBySeq( int meetUpRequestStatus, Long meetUpSeq, Long userSeq,  String refuseReason);
 
     @Query("select  p.user.userSeq from MeetUpRequest p where  p.meetUpBoard.meetUpSeq=?1")
     List<Long> findUserSeqByMeetUpReqSeq(Long meetUpReqSeq);
@@ -32,8 +32,10 @@ public interface MeetUpRequestRepository extends JpaRepository<MeetUpRequest, Lo
 
     @Modifying
     @Transactional
-    @Query("delete from MeetUpRequest where meetUpBoard.meetUpSeq=?1 and user.userSeq=?2")
-    void deleteMeetUpRequestBySeq(Long meetUpBoardSeq ,Long userSeq);
+    @Query("delete from MeetUpRequest where  user.userSeq=?1 and meetUpBoard.meetUpSeq=?2")
+    void deleteMeetUpRequestBySeq(Long userSeq , Long meetUpSeq);
+    // userSeq : 2 meetUpSeq : 5
+
 
 
 

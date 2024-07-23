@@ -54,7 +54,6 @@ public interface MeetUpBoardRepository extends JpaRepository<MeetUpBoard, Long> 
 
     @Query("select  p  from MeetUpBoard p where p.meetUpSeq=?1")
     MeetUpBoard findPwdBySeq(Long meetUpSeq);
-//
 
     @Modifying
     @Transactional

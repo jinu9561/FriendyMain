@@ -25,7 +25,7 @@ public class CustomMemberDetailsService implements UserDetailsService {
         Users findUsers = userRepository.findUserByUserId(userId); // pk가 아닌 userId 속성으로
 
         if(findUsers != null && !findUsers.getRole().equals("인증 미완료") && (findUsers.getUserDetail().getUserState()
-        == State.CERTIFIED || findUsers.getUserDetail().getUserState() == State.NOMAL) ){
+        == State.CERTIFIED || findUsers.getUserDetail().getUserState() == State.NORMAL) ){
             log.info("findMember = {}",findUsers);
             return new CustomMemberDetails(findUsers);
         }

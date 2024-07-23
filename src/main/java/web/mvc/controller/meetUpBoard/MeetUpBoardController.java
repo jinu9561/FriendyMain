@@ -62,13 +62,10 @@ public class MeetUpBoardController {
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
-    //    @PutMapping("/invite")
-//    public ResponseEntity<?> inviteMeetUpBoard(@)
+
     @GetMapping("/interestList")
     public ResponseEntity<?> findAllInterestList() {
         List<Interest> interestList = interestRepository.findAll();
-
-        // InterestDTO interestDTO = new InterestDTO();
         List<InterestDTO> interestDTOList = new ArrayList<>();
 
         for (Interest interest : interestList) {
@@ -84,13 +81,12 @@ public class MeetUpBoardController {
         return ResponseEntity.status(HttpStatus.OK).body(interestDTOList);
     }
 
-    @GetMapping("/selectAll")
-    public ResponseEntity<?> findAllMeetUp(){
-        List<MeetUpBoard> meetUpBoardList = meetUpBoardService.selectAll();
+    @GetMapping("/selectAllAsc")
+    public ResponseEntity<?> findAllMeetUpAsc(){
+        List<MeetUpBoard> meetUpBoardList = meetUpBoardService.selectAllAsc();
         List<MeetUpSendDTO> meetUpSendDTOList = new ArrayList<>();
 
         for (MeetUpBoard board : meetUpBoardList) {
-            // 각 MeetUpBoard 객체의 정보를 출력합니다.
             Date date = board.getMeetUpDeadLine();
             String meetUpImgName = null;
             List<MeetUpBoardDetailImg> list = meetUpDetailImgService.findImgList(board.getMeetUpSeq());
@@ -114,6 +110,42 @@ public class MeetUpBoardController {
 
             meetUpSendDTOList.add(meetUpSendDTO);
         }
+        System.out.println(meetUpBoardList+"최신순?");
+
+        return ResponseEntity.status(HttpStatus.OK).body(meetUpSendDTOList);
+    }
+
+
+    @GetMapping("/selectAllDesc")
+    public ResponseEntity<?> findAllMeetUpDesc(){
+        List<MeetUpBoard> meetUpBoardList = meetUpBoardService.selectAllDesc();
+        List<MeetUpSendDTO> meetUpSendDTOList = new ArrayList<>();
+
+        for (MeetUpBoard board : meetUpBoardList) {
+            Date date = board.getMeetUpDeadLine();
+            String meetUpImgName = null;
+            List<MeetUpBoardDetailImg> list = meetUpDetailImgService.findImgList(board.getMeetUpSeq());
+            List<String> imgNameList = new ArrayList<>();
+            for (MeetUpBoardDetailImg meetUpBoardDetailImg : list) {
+                meetUpImgName = meetUpBoardDetailImg.getMeetUpDetailImgName();
+                imgNameList.add(meetUpImgName);
+            }
+            MeetUpSendDTO meetUpSendDTO = MeetUpSendDTO.builder()
+                    .meetUpSeq(board.getMeetUpSeq())
+                    .meetUpDesc(board.getMeetUpDesc())
+                    .userSeq(board.getUser().getUserSeq())
+                    .interestCate(board.getInterest().getInterestCategory())
+                    .meetUpName(board.getMeetUpName())
+                    .meetUpBoardDetailImgNameList(imgNameList)
+                    .meetUpDeadLine(String.valueOf(date))
+                    .meetUpMaxEntry(board.getMeetUpMaxEntry())
+                    .meetUpPwd(board.getMeetUpPwd())
+                    .meetUpStatus(board.getMeetUpStatus())
+                    .build();
+
+            meetUpSendDTOList.add(meetUpSendDTO);
+        }
+        System.out.println(meetUpBoardList+"오래된순?");
 
         return ResponseEntity.status(HttpStatus.OK).body(meetUpSendDTOList);
     }

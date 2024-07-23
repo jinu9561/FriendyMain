@@ -115,7 +115,7 @@ public class meetUpBoardTest {
     @Test
     void 소모임모든리스트_호출() {
 
-        List<MeetUpBoard> meetUpBoardList = meetUpBoardService.selectAll();
+        List<MeetUpBoard> meetUpBoardList = meetUpBoardService.selectAllDesc();
         List<MeetUpSendDTO> meetUpSendDTOList = new ArrayList<>();
 
         for (MeetUpBoard board : meetUpBoardList) {

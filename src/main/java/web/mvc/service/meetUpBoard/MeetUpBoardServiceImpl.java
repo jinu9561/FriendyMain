@@ -268,12 +268,17 @@ public class MeetUpBoardServiceImpl implements MeetUpBoardService {
 
 
     @Override
-    public List<MeetUpBoard> selectAll() {
-
-
-        List<MeetUpBoard> meetUpBoardList = meetUpBoardRepository.findAll();
+    public List<MeetUpBoard> selectAllAsc() {
+        List<MeetUpBoard> meetUpBoardList = meetUpBoardRepository.findAllAsc();
         return meetUpBoardList;
     }
+
+    @Override
+    public List<MeetUpBoard> selectAllDesc() {
+        List<MeetUpBoard> meetUpBoardList = meetUpBoardRepository.findAllDesc();
+        return meetUpBoardList;
+    }
+
 
     @Override
     public List<Date> findByPartySeq() {

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface MeetUpRequestRepository extends JpaRepository<MeetUpRequest, Long> {
 
-    @Query("select p from MeetUpRequest p where p.meetUpBoard.meetUpSeq = ?1")
+    @Query("select p from MeetUpRequest p where p.meetUpBoard.meetUpSeq = ?1 order by p.meetUpReqeustRegDate asc")
     List<MeetUpRequest> findAllByMeetUpSeq(Long meetUpBoardSeq);
 
     @Modifying
@@ -21,7 +21,7 @@ public interface MeetUpRequestRepository extends JpaRepository<MeetUpRequest, Lo
     List<Long> findUserSeqByMeetUpReqSeq(Long meetUpReqSeq);
 
 
-    @Query("select m from MeetUpRequest  m where  m.user.userSeq=?1")
+    @Query("select m from MeetUpRequest  m where  m.user.userSeq=?1 order by m.meetUpReqeustRegDate asc ")
     List<MeetUpRequest> findMeetUpRequestByUserSeq(Long userSeq);
 
     @Modifying

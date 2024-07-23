@@ -48,6 +48,9 @@ public class MeetUpBoard {
 
     private int meetUpStatus;
 
+    @Column(length = 500)
+    private String meetUpPlace;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "interest_seq")
     private Interest interest;
@@ -58,6 +61,8 @@ public class MeetUpBoard {
 
     @OneToMany(mappedBy = "meetUpBoard", cascade = CascadeType.ALL)
     private List<MeetUpBoardDetailImg> meetUpBoardDetailImgList;
+
+
 
     @OneToOne(mappedBy = "meetUpBoard", cascade = CascadeType.ALL)
     private MeetupRecord meetupRecord;

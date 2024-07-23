@@ -14,6 +14,7 @@ public class MeetUpRequestDTO {
     private Long meetUpRequestSeq;
     private Long meetUpSeq;
     private Long userSeq;
+    private String meetUpPlace;
     private int meetUpRequestStatus;
     private String requestText;
     private String userNickName;

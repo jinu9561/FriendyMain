@@ -108,6 +108,7 @@ public class MeetUpBoardServiceImpl implements MeetUpBoardService {
                     .interest(interest)
                     .meetUpPwd(meetUpBoardDTO.getMeetUpPwd())
                     .meetUpDeadLine(date)
+                    .meetUpPlace(meetUpBoardDTO.getMeetUpPlace())
                     .nowEntry(1)
                     .meetUpMaxEntry(meetUpBoardDTO.getMeetUpMaxEntry())
                     .meetUpStatus(meetUpBoardDTO.getMeetUpStatus())
@@ -166,6 +167,7 @@ public class MeetUpBoardServiceImpl implements MeetUpBoardService {
                 .meetUpName(meetUpUpdateDTO.getMeetUpName())
                 .meetUpDesc(meetUpUpdateDTO.getMeetUpDesc())
                 .meetUpMaxEntry(meetUpUpdateDTO.getMeetUpMaxEntry())
+                .meetUpPlace(meetUpUpdateDTO.getMeetUpPlace())
                 .meetUpDeadLine(date)
                 .build();
 

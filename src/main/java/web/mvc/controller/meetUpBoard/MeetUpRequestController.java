@@ -97,6 +97,7 @@ public class MeetUpRequestController {
                     .meetUpRequestDate(String.valueOf(meetUpRequest.getMeetUpReqeustRegDate()))
                     .requestText(meetUpRequest.getRequestText())
                     .refuseReason(meetUpRequest.getReasonText())
+                    .meetUpPlace(meetUpRequest.getRequestText())
                     .build();
             requestDTOList.add(meetUpRequestDTO);
             System.out.println("meetUpRequestDTO : +++"+meetUpRequestDTO);

@@ -241,6 +241,8 @@ public class MeetUpBoardController {
                     .meetUpMaxEntry(meetUpBoardList.getMeetUpBoard().getMeetUpMaxEntry())
                     .nowEntry(meetUpBoardList.getMeetUpBoard().getNowEntry())
                     .meetUpDeadLine(String.valueOf(meetUpBoardList.getMeetUpBoard().getMeetUpDeadLine()))
+                    .nickName(meetUpBoardList.getUser().getNickName())
+                    .meetUpPlace(meetUpBoardList.getMeetUpBoard().getMeetUpPlace())
                     .build();
             meetUpSendDTOList.add(meetUpSendDTO);
         }
@@ -310,6 +312,7 @@ public class MeetUpBoardController {
                     .roomId(meetUpBoard.getChattingroom().getRoomId())
                     .chattingRoomSeq(meetUpBoard.getChattingroom().getChattingroomSeq())
                     .userName(meetUpBoard.getUser().getUserName())
+                    .meetUpPlace(meetUpBoard.getMeetUpPlace())
                     .build();
         }
         System.out.println("meetUpSeq :" + meetUpSeq);

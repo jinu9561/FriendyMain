@@ -17,7 +17,7 @@ public interface MeetUpRequestService {
 
     List<MeetUpRequest> findAllReqestBySeq(Long meetUpBoardSeq);
 
-     String updateStatusByReqSeq( int meetUpRequestStatus, Long meetUpSeq , Long userSeq);
+     String updateStatusByReqSeq( int meetUpRequestStatus, Long meetUpSeq , Long userSeq , String refuseReason);
 
     List<UsersDTO> findMeetUpList(Long meetUpSeq);
 

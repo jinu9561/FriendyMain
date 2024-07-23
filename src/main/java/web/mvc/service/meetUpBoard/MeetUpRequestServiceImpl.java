@@ -14,6 +14,7 @@ import web.mvc.repository.meetUpBoard.MeetUpBoardListRepository;
 import web.mvc.repository.meetUpBoard.MeetUpBoardRepository;
 import web.mvc.repository.meetUpBoard.MeetUpRequestRepository;
 import web.mvc.repository.user.UserRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,6 @@ public class MeetUpRequestServiceImpl implements MeetUpRequestService {
             if (meetUpBoardList.getUser().getUserSeq() == userSeq) {
                 return 2;
             } else if (meetUpBoardList.getUser().getUserSeq() != userSeq) {
-
                 Users users = Users.builder()
                         .userSeq(meetUpRequestDTO.getUserSeq())
                         .build();
@@ -62,27 +62,21 @@ public class MeetUpRequestServiceImpl implements MeetUpRequestService {
                 meetUpRequestRepository.save(meetUpRequest);
                 return 1;
             }
-
         }
-
         return 0;
     }
 
     @Override
     public List<Long> checkValidRequest(Long meetUpSeq) {
-        System.out.println(meetUpSeq + "서비스단 시퀀스");
         List<Long> list = meetUpRequestRepository.findUserSeqByMeetUpReqSeq(meetUpSeq);
         for (Long seq : list) {
             // 각 seq 값을 사용하는 로직 작성
-            System.out.println(seq);
         }
         return list;
 
     }
 
-
     public List<MeetUpRequest> findAllReqestBySeq(Long meetUpBoardSeq) {
-
         List<MeetUpRequest> list = meetUpRequestRepository.findAllByMeetUpSeq(meetUpBoardSeq);
 
         return list;
@@ -90,9 +84,11 @@ public class MeetUpRequestServiceImpl implements MeetUpRequestService {
     }
 
     //소모임 신청서 상태 변경
-    public String updateStatusByReqSeq(int meetUpRequestStatus, Long meetUpSeq, Long userSeq) {
-        System.out.println("meetUpReqeustStatus" + meetUpRequestStatus);
-        int result = meetUpRequestRepository.changeStatusBySeq(meetUpRequestStatus, meetUpSeq, userSeq);
+    public String updateStatusByReqSeq(int meetUpRequestStatus, Long meetUpSeq, Long userSeq ,String refuseReason) {
+
+        System.out.println("이유"+refuseReason);
+        int result = meetUpRequestRepository.changeStatusBySeq(meetUpRequestStatus, meetUpSeq, userSeq , refuseReason);
+
         return null;
     }
 
@@ -101,7 +97,6 @@ public class MeetUpRequestServiceImpl implements MeetUpRequestService {
         List<MeetUpBoardList> meetUpBoardLists = meetUpBoardListRepository.selectMeetUpBoardListByMeetUpSeq(meetUpSeq);
         List<UsersDTO> usersDTOS = new ArrayList<>();
         for (MeetUpBoardList meetUpBoardList : meetUpBoardLists) {
-            System.out.println("Test__" + meetUpBoardList.getMeetUpBoard().getMeetUpName());
             UsersDTO usersDTO = UsersDTO.builder()
                     .nickName(meetUpBoardList.getUser().getNickName())
                     .email(meetUpBoardList.getUser().getEmail())
@@ -110,7 +105,6 @@ public class MeetUpRequestServiceImpl implements MeetUpRequestService {
                     .phone(meetUpBoardList.getUser().getPhone())
                     .build();
             usersDTOS.add(usersDTO);
-            System.out.println(usersDTO + "userDTO");
         }
         return usersDTOS;
     }
@@ -118,11 +112,10 @@ public class MeetUpRequestServiceImpl implements MeetUpRequestService {
     @Override
     public List<MeetUpRequest> findAllRequestByUserSeq(Long userSeq) {
 
-        List<MeetUpRequest> meetUpRequestList=meetUpRequestRepository.findMeetUpRequestByUserSeq(userSeq);
+        List<MeetUpRequest> meetUpRequestList = meetUpRequestRepository.findMeetUpRequestByUserSeq(userSeq);
 
         return meetUpRequestList;
     }
-
 
     @Override
     public void addMeetUpList(MeetUpRequestDTO meetUpRequestDTO) {
@@ -141,24 +134,17 @@ public class MeetUpRequestServiceImpl implements MeetUpRequestService {
 
     }
 
-
-
-
     @Override
     public void deleteFromMeetUp(Long userSeq, Long meetUpSeq) {
         // 해당 소모임에서 삭제하기위한 소모임의 seq , 유저의 seq,
-        System.out.println("userSeq:"+userSeq + "meetUpSeq:"+meetUpSeq);
         meetUpRequestRepository.deleteAllByMeetUpBoardListSeq(meetUpSeq, userSeq);
 
     }
 
+
     @Override
     public void deleteRequest(Long userSeq, Long meetUpSeq) {
-        System.out.println("삭제 2트째");
-        System.out.println("userSeq:"+userSeq + "meetUpSeq:"+meetUpSeq);
 
-        meetUpRequestRepository.deleteMeetUpRequestBySeq(userSeq,meetUpSeq);
+        meetUpRequestRepository.deleteMeetUpRequestBySeq(userSeq, meetUpSeq);
     }
-
-
 }

@@ -21,6 +21,7 @@ public class MeetUpBoardDTO {
     private String meetUpName;
     private String meetUpDesc;
     private List<String> meetUpPeopleList;
+    private String meetUpPlace;
     private int meetUpPwd;
     private int checkPwd;
     private int meetUpMaxEntry;

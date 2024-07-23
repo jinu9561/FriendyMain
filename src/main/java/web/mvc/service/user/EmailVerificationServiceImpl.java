@@ -46,7 +46,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
                     Users users = userRepository.findUserByUserId(emailVerificationDTO.getUserId());
                     if(users != null){
                         users.setRole("ROLE_USER");
-                        users.getUserDetail().setUserState(State.NOMAL);
+                        users.getUserDetail().setUserState(State.NORMAL);
                         result.set(true);
                     }
                 }

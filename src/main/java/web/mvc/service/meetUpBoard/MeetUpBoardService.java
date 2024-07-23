@@ -39,8 +39,9 @@ public interface MeetUpBoardService {
     MeetUpBoard findMeetUpByBoardSeq(Long meetUpSeq);
 
     List<MeetUpBoard> findByMeetUpName(String meetUpName);
-    List<MeetUpBoard> selectAll();
+    List<MeetUpBoard> selectAllAsc();
 
+    List<MeetUpBoard> selectAllDesc();
     List<Date> findByPartySeq();
 
 

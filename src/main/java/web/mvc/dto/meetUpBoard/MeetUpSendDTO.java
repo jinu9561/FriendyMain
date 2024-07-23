@@ -15,7 +15,9 @@ import java.util.List;
 public class MeetUpSendDTO {
     private Long meetUpSeq;
     private Long userSeq;
+    private String nickName;
     private String interestCate;
+    private String meetUpPlace;
     private Long interestSeq;
     private String meetUpName;
     private String meetUpDesc;

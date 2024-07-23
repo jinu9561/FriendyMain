@@ -12,9 +12,7 @@ import web.mvc.entity.meetUpBoard.MeetUpRequest;
 import web.mvc.entity.user.Users;
 import web.mvc.exception.common.ErrorCode;
 import web.mvc.exception.common.GlobalException;
-import web.mvc.repository.meetUpBoard.MeetUpBoardListRepository;
 import web.mvc.repository.meetUpBoard.MeetUpBoardRepository;
-import web.mvc.repository.meetUpBoard.MeetUpRequestRepository;
 import web.mvc.repository.user.UserRepository;
 import web.mvc.service.meetUpBoard.MeetUpRequestService;
 import web.mvc.service.meetUpBoard.MeetUpRequestServiceImpl;
@@ -62,8 +60,6 @@ public class MeetUpRequestController {
         List<MeetUpRequest> list = meetUpRequestService.findAllReqestBySeq(meetUpSeq);
         System.out.println("meetupSeq" + meetUpSeq + " || 12345");
         List<MeetUpRequestDTO> requestList = new ArrayList<>();
-
-
         for (MeetUpRequest meetUpRequest : list) {
             MeetUpRequestDTO meetUpRequestDTO = MeetUpRequestDTO.builder()
                     .userNickName(meetUpRequest.getUser().getNickName())
@@ -72,6 +68,7 @@ public class MeetUpRequestController {
                     .meetUpSeq(meetUpRequest.getMeetUpRequestSeq())
                     .meetUpRequestSeq(meetUpRequest.getMeetUpRequestSeq())
                     .requestText(meetUpRequest.getRequestText())
+                    .refuseReason(meetUpRequest.getReasonText())
                     .build();
             requestList.add(meetUpRequestDTO);
 
@@ -97,7 +94,10 @@ public class MeetUpRequestController {
                     .meetUpRequestStatus(meetUpRequest.getMeetUpRequestStatus())
                     .meetUpSeq(meetUpRequest.getMeetUpBoard().getMeetUpSeq())
                     .meetUpRequestSeq(meetUpRequest.getMeetUpRequestSeq())
+                    .meetUpRequestDate(String.valueOf(meetUpRequest.getMeetUpReqeustRegDate()))
                     .requestText(meetUpRequest.getRequestText())
+                    .refuseReason(meetUpRequest.getReasonText())
+                    .meetUpPlace(meetUpRequest.getRequestText())
                     .build();
             requestDTOList.add(meetUpRequestDTO);
             System.out.println("meetUpRequestDTO : +++"+meetUpRequestDTO);
@@ -116,11 +116,11 @@ public class MeetUpRequestController {
         int maxEntry = meetUpBoard.getMeetUpMaxEntry();
         int nowEntry = meetUpBoard.getNowEntry();
         int count = 0;
-        System.out.println(maxEntry + "|||" + nowEntry);
         int status = meetUpRequestDTO.getMeetUpRequestStatus();
+        String refuseReason = meetUpRequestDTO.getRefuseReason();
+        System.out.println("거절 사유 :" + refuseReason);
         Long meetUpSeq = meetUpRequestDTO.getMeetUpSeq();
         Long userSeq = meetUpRequestDTO.getUserSeq();
-
         System.out.println("insertStatus : "+ status);
         System.out.println("userSeq : " + userSeq);
         System.out.println("metUpSeq :" + meetUpSeq);
@@ -133,21 +133,19 @@ public class MeetUpRequestController {
                         count++;
                 }
                 meetUpBoardRepository.updateNowCount(count, meetUpRequestDTO.getMeetUpSeq());
-                System.out.println("리스트 테스트2" + nowEntry);
-                String result2 = meetUpRequestService.updateStatusByReqSeq(status, meetUpSeq, userSeq);
+                String result2 = meetUpRequestService.updateStatusByReqSeq(status, meetUpSeq, userSeq, refuseReason);
                 System.out.println("상태가 변경되었습니다." + "||" + result2);
             } else if (maxEntry <= nowEntry) {
                     throw new GlobalException(ErrorCode.MAX_ENTRY);
             }
         } else if (status == 2) {
-            System.out.println("여기까지 오긴함 ?");
             meetUpRequestServiceImpl.deleteFromMeetUp(meetUpSeq, userSeq);
             List<MeetUpBoardList> meetUpBoardList = meetUpBoard.getMeetUpBoardList();
             for (MeetUpBoardList meetUpBoardList1 : meetUpBoardList) {
                 count++;
             }
             meetUpBoardRepository.updateNowCount(count, meetUpRequestDTO.getMeetUpSeq());
-            meetUpRequestService.updateStatusByReqSeq(status, meetUpSeq, userSeq);
+            meetUpRequestService.updateStatusByReqSeq(status, meetUpSeq, userSeq, refuseReason);
 
             return ResponseEntity.status(HttpStatus.OK).body(null);
 
@@ -164,8 +162,6 @@ public class MeetUpRequestController {
         //삭제 하고자 하는 소모임의(소모임 시퀀스)  참여 명단에서 삭제당하는 유저의 시퀀스를 넘김.
         System.out.println("여기까지는 잘 오냐 ? ");
 
-
-
         meetUpRequestService.deleteFromMeetUp(meetUpRequestDTO.getUserSeq(), meetUpRequestDTO.getMeetUpSeq());
         return null;
     }
@@ -181,6 +177,7 @@ public class MeetUpRequestController {
             Users users = usersOptional.get();
             users.getNickName();
             usersDTO = UsersDTO.builder()
+                    .imgName(users.getProfile().getProfileMainImgName())
                     .nickName(users.getNickName())
                     .email(users.getEmail())
                     .country(users.getCountry())

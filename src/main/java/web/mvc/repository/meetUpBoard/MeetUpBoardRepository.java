@@ -17,6 +17,11 @@ public interface MeetUpBoardRepository extends JpaRepository<MeetUpBoard, Long> 
     @Query("select pb.meetUpDeadLine FROM MeetUpBoard pb order by pb.meetUpRegDate desc ")
     List<Date> findAllPartDeadLine();
 
+    @Query("select m from MeetUpBoard m order by  m.meetUpRegDate desc")
+    List<MeetUpBoard> findAllDesc();
+    @Query("select m from MeetUpBoard m order by  m.meetUpRegDate asc")
+    List<MeetUpBoard> findAllAsc();
+
     @Modifying
     @Transactional
     @Query("UPDATE MeetUpBoard m " +
@@ -51,10 +56,6 @@ public interface MeetUpBoardRepository extends JpaRepository<MeetUpBoard, Long> 
 
     @Query("select  p.meetUpSeq  from MeetUpBoard p where p.meetUpDeadLine = ?1 ")
     List<Long> findByPartySeqByDeadLine(Date partDeadLine);
-
-    @Query("select  p  from MeetUpBoard p where p.meetUpSeq=?1")
-    MeetUpBoard findPwdBySeq(Long meetUpSeq);
-//
 
     @Modifying
     @Transactional

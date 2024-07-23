@@ -30,7 +30,7 @@ public class UsersDTO {
     private String phone;
     private Classification country;
     private Gender gender;
-
+    private String imgName;
     private List<String> interestCategory;
     private UserDetailDTO userDetail;
 

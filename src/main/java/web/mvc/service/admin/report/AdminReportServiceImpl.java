@@ -136,7 +136,7 @@ public class AdminReportServiceImpl implements AdminReportService {
         switch(result) {
             case 2: return State.TEMPORARY_STOP; // 3-day suspension
             case 3: return State.PERMANENT_STOP; // Permanent ban
-            default: return State.NOMAL; // Default or other cases set as normal
+            default: return State.NORMAL; // Default or other cases set as normal
         }
     }
 

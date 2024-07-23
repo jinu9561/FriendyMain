@@ -37,5 +37,8 @@ public class MeetUpRequest {
     private Date meetUpReqeustRegDate;
 
     @Column(length = 300)
+    private String reasonText;
+
+    @Column(length = 300)
     private String requestText;
 }

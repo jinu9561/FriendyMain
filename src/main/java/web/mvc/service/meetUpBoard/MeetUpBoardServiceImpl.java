@@ -108,6 +108,7 @@ public class MeetUpBoardServiceImpl implements MeetUpBoardService {
                     .interest(interest)
                     .meetUpPwd(meetUpBoardDTO.getMeetUpPwd())
                     .meetUpDeadLine(date)
+                    .meetUpPlace(meetUpBoardDTO.getMeetUpPlace())
                     .nowEntry(1)
                     .meetUpMaxEntry(meetUpBoardDTO.getMeetUpMaxEntry())
                     .meetUpStatus(meetUpBoardDTO.getMeetUpStatus())
@@ -166,6 +167,7 @@ public class MeetUpBoardServiceImpl implements MeetUpBoardService {
                 .meetUpName(meetUpUpdateDTO.getMeetUpName())
                 .meetUpDesc(meetUpUpdateDTO.getMeetUpDesc())
                 .meetUpMaxEntry(meetUpUpdateDTO.getMeetUpMaxEntry())
+                .meetUpPlace(meetUpUpdateDTO.getMeetUpPlace())
                 .meetUpDeadLine(date)
                 .build();
 
@@ -263,17 +265,22 @@ public class MeetUpBoardServiceImpl implements MeetUpBoardService {
     public List<MeetUpBoard> findByMeetUpName(String meetUpName) {
 
         List<MeetUpBoard> resultList = meetUpBoardRepository.findMeetUPBoardByMeetUpName(meetUpName);
-        return null;
+        return resultList;
     }
 
 
     @Override
-    public List<MeetUpBoard> selectAll() {
-
-
-        List<MeetUpBoard> meetUpBoardList = meetUpBoardRepository.findAll();
+    public List<MeetUpBoard> selectAllAsc() {
+        List<MeetUpBoard> meetUpBoardList = meetUpBoardRepository.findAllAsc();
         return meetUpBoardList;
     }
+
+    @Override
+    public List<MeetUpBoard> selectAllDesc() {
+        List<MeetUpBoard> meetUpBoardList = meetUpBoardRepository.findAllDesc();
+        return meetUpBoardList;
+    }
+
 
     @Override
     public List<Date> findByPartySeq() {

@@ -263,7 +263,7 @@ public class MeetUpBoardServiceImpl implements MeetUpBoardService {
     public List<MeetUpBoard> findByMeetUpName(String meetUpName) {
 
         List<MeetUpBoard> resultList = meetUpBoardRepository.findMeetUPBoardByMeetUpName(meetUpName);
-        return null;
+        return resultList;
     }
 
 

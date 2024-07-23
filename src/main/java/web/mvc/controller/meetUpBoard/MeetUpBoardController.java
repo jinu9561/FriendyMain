@@ -55,12 +55,7 @@ public class MeetUpBoardController {
         return ResponseEntity.status(HttpStatus.OK).body("test");
     }
 
-    @GetMapping("/search/{meetUpName}")
-    //게시글 이름으로 검색
-    public ResponseEntity<?> selectMeetUpBoard(@PathVariable String meetUpName) {
-        List<MeetUpBoard> list = meetUpBoardService.findByMeetUpName(meetUpName);
-        return ResponseEntity.status(HttpStatus.OK).body(list);
-    }
+
 
 
     @GetMapping("/interestList")
@@ -80,6 +75,44 @@ public class MeetUpBoardController {
 
         return ResponseEntity.status(HttpStatus.OK).body(interestDTOList);
     }
+
+    @GetMapping("/search/meetUpName")
+    public ResponseEntity<?> selectMeetUpBoard(@RequestParam String meetUpName) {
+        List<MeetUpBoard> meetUplist = meetUpBoardService.findByMeetUpName(meetUpName);
+        List<MeetUpSendDTO> meetUpSendDTOList = new ArrayList<>();
+
+        for (MeetUpBoard board : meetUplist) {
+            Date date = board.getMeetUpDeadLine();
+            String meetUpImgName = null;
+            List<MeetUpBoardDetailImg> list = meetUpDetailImgService.findImgList(board.getMeetUpSeq());
+            List<String> imgNameList = new ArrayList<>();
+            for (MeetUpBoardDetailImg meetUpBoardDetailImg : list) {
+                meetUpImgName = meetUpBoardDetailImg.getMeetUpDetailImgName();
+                imgNameList.add(meetUpImgName);
+            }
+            MeetUpSendDTO meetUpSendDTO = MeetUpSendDTO.builder()
+                    .meetUpSeq(board.getMeetUpSeq())
+                    .meetUpDesc(board.getMeetUpDesc())
+                    .userSeq(board.getUser().getUserSeq())
+                    .interestCate(board.getInterest().getInterestCategory())
+                    .meetUpName(board.getMeetUpName())
+                    .meetUpBoardDetailImgNameList(imgNameList)
+                    .meetUpDeadLine(String.valueOf(date))
+                    .meetUpMaxEntry(board.getMeetUpMaxEntry())
+                    .meetUpPwd(board.getMeetUpPwd())
+                    .meetUpStatus(board.getMeetUpStatus())
+                    .build();
+
+            meetUpSendDTOList.add(meetUpSendDTO);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(meetUpSendDTOList);
+    }
+
+
+
+
+
 
     @GetMapping("/selectAllAsc")
     public ResponseEntity<?> findAllMeetUpAsc(){
